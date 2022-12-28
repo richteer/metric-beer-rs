@@ -13,20 +13,20 @@ pub struct OpenTodayProps {
 
 
 #[function_component(OpenToday)]
-pub fn open_today(data: &OpenTodayProps) -> Html {
-    let brewdata = &data.data;
-    let today = data.date.format("%A").to_string();
+pub fn open_today(props: &OpenTodayProps) -> Html {
+    let brewdata = &props.data;
+    let today = props.date.format("%A").to_string();
 
     // Convert the list of breweries into rows of data for the table
     let map_func = |e: &Brewery| {
         let hours = e.hours.get(&today).unwrap();
-        let open = hours.open.to_today(&data.date);
-        let close = hours.close.to_today(&data.date);
+        let open = hours.open.to_today(&props.date);
+        let close = hours.close.to_today(&props.date);
         (
             e.name.to_string(), // Probably unnecessary clone here, but makes the code below less of an indented mess.
-            format_time(open, data.ampm),
-            format_time(close, data.ampm),
-            format_upcoming(&data.date, open.as_ref(), close.as_ref()),
+            format_time(open, props.ampm),
+            format_time(close, props.ampm),
+            format_upcoming(&props.date, open.as_ref(), close.as_ref()),
         )
     };
 
