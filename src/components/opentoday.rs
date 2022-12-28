@@ -23,7 +23,7 @@ pub fn open_today(props: &OpenTodayProps) -> Html {
         let open = hours.open.to_today(&props.date);
         let close = hours.close.to_today(&props.date);
         (
-            e.name.to_string(), // Probably unnecessary clone here, but makes the code below less of an indented mess.
+            e.name.to_string(),
             format_time(open, props.ampm),
             format_time(close, props.ampm),
             format_upcoming(&props.date, open.as_ref(), close.as_ref()),
