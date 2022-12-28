@@ -1,13 +1,6 @@
 use std::fmt::Display;
 use chrono::prelude::*;
 
-pub enum OpenStatus {
-    Open,
-    Closed,
-    OpenLater(String),
-    Error,
-}
-
 pub trait ToTodayHour {
     fn to_today(&self, now: &DateTime<Local>) -> Option<DateTime<Local>>;
 }
@@ -25,6 +18,12 @@ impl ToTodayHour for i32 {
     }
 }
 
+pub enum OpenStatus {
+    Open,
+    Closed,
+    OpenLater(String),
+    Error,
+}
 
 impl Display for OpenStatus {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -47,23 +46,6 @@ pub fn format_time(date: Option<DateTime<Local>>, ampm: bool) -> String {
         (Some(date), true) => date.format(ampm_format).to_string(),
         (Some(date), false) => date.format(hr24_format).to_string(),
         (None, _) => "CLOSED".to_string(),
-    }
-}
-
-pub fn format_upcoming(now: &DateTime<Local>, open: Option<&DateTime<Local>>, close: Option<&DateTime<Local>>) -> OpenStatus {
-    match (open, close) {
-        (Some(o), Some(c)) => {
-            match (now.cmp(o), now.cmp(c)) {
-                (std::cmp::Ordering::Less, _) => OpenStatus::OpenLater(format!("{} min", (*o - *now).num_minutes())), // TODO: consider an display option for hours/mins?
-                (_, std::cmp::Ordering::Less) | (_, std::cmp::Ordering::Equal)  => OpenStatus::Open,
-                (_, std::cmp::Ordering::Greater) => OpenStatus::Closed,
-            }
-        }
-        (None, None) => OpenStatus::Closed,
-        (Some(_), None) | (None, Some(_)) => {
-            log::error!("data is probably wrong, open and close aren't both -1 (closed). open = {open:?}, close = {close:?}");
-            OpenStatus::Error
-        },
     }
 }
 

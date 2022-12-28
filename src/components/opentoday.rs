@@ -1,8 +1,27 @@
 use std::sync::Arc;
 use yew::prelude::*;
-use crate::common::*;
+use chrono::prelude::*;
 
+use crate::common::*;
 use crate::data::*;
+
+fn format_upcoming(now: &DateTime<Local>, open: Option<&DateTime<Local>>, close: Option<&DateTime<Local>>) -> OpenStatus {
+    match (open, close) {
+        (Some(o), Some(c)) => {
+            match (now.cmp(o), now.cmp(c)) {
+                (std::cmp::Ordering::Less, _) => OpenStatus::OpenLater(format!("{} min", (*o - *now).num_minutes())), // TODO: consider an display option for hours/mins?
+                (_, std::cmp::Ordering::Less) | (_, std::cmp::Ordering::Equal)  => OpenStatus::Open,
+                (_, std::cmp::Ordering::Greater) => OpenStatus::Closed,
+            }
+        }
+        (None, None) => OpenStatus::Closed,
+        (Some(_), None) | (None, Some(_)) => {
+            log::error!("data is probably wrong, open and close aren't both -1 (closed). open = {open:?}, close = {close:?}");
+            OpenStatus::Error
+        },
+    }
+}
+
 
 #[derive(Properties, PartialEq)]
 pub struct OpenTodayProps {
