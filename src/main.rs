@@ -66,7 +66,9 @@ fn App() -> Html {
                         <OpenToday data={data} ampm={*ampm} date={*date}/>
                     </div>
                     <div>
-                        <HourTable data={data} ampm={*ampm} date={*date} dayorder={(*dayorder).clone()}/>
+                        <figure>
+                            <HourTable data={data} ampm={*ampm} date={*date} dayorder={(*dayorder).clone()}/>
+                        </figure>
                     </div>
                     </>
                 }
