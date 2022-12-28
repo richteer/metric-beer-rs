@@ -69,7 +69,12 @@ pub fn open_today(props: &OpenTodayProps) -> Html {
                             <td>{e.0}</td>
                             <td>{e.1}</td>
                             <td>{e.2}</td>
-                            <td>{e.3}</td>
+                            <td style={format!("color: {}", match &e.3 {
+                                OpenStatus::Open => "green",
+                                OpenStatus::Closed => "red",
+                                OpenStatus::OpenLater(_) => "yellow",
+                                OpenStatus::Error => "gray",
+                            })}>{e.3}</td>
                         </tr>
                     }
                 })
