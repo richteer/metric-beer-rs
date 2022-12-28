@@ -63,9 +63,11 @@ fn App() -> Html {
                 html! {
                     <>
                     <div>
+                        {format!("{} hours", date.format("%A"))} // TODO: Probably style this better
                         <OpenToday data={data} ampm={*ampm} date={*date}/>
                     </div>
                     <div>
+                        {"Schedule"}
                         <figure>
                             <HourTable data={data} ampm={*ampm} date={*date} dayorder={(*dayorder).clone()}/>
                         </figure>
