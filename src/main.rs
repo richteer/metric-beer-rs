@@ -1,3 +1,4 @@
+use std::sync::Arc;
 use gloo_net::http::Request;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
@@ -12,11 +13,11 @@ use data::*;
 
 
 // TODO: Actually error handle, don't rely on unwraps
-async fn get_data() -> Result<BreweryData, ()> {
-    Ok(Request::get("https://richteer.github.io/metric-beer-data/beer.json")
+async fn get_data() -> Result<Arc<Box<BreweryData>>, ()> {
+    Ok(Arc::new(Box::new(Request::get("https://richteer.github.io/metric-beer-data/beer.json")
         .send().await.unwrap()
         .json::<BreweryData>()
-        .await.unwrap())
+        .await.unwrap())))
 }
 
 
@@ -30,8 +31,6 @@ fn App() -> Html {
     let dayorder: Vec<String> = vec!["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].iter()
         .map(|e| e.to_string()).collect();
 
-    // TODO: probably put BreweryData into some kind of shareable Box to reduce clones
-
     {
         let data = data.clone();
         use_mount(move || { data.run() });
@@ -39,7 +38,6 @@ fn App() -> Html {
     {
         let date = date.clone();
         use_interval(move || {
-            // TODO: is getting current time every second expensive?
             date.set(chrono::Local::now());
         }, 1000);
     }
@@ -57,10 +55,10 @@ fn App() -> Html {
                 html! {
                     <>
                     <div>
-                        <OpenToday data={data.clone()} ampm={*ampm} date={*date}/>
+                        <OpenToday data={data} ampm={*ampm} date={*date}/>
                     </div>
                     <div>
-                        <HourTable data={data.clone()} ampm={*ampm} date={*date} dayorder={dayorder.clone()}/>
+                        <HourTable data={data} ampm={*ampm} date={*date} dayorder={dayorder.clone()}/>
                     </div>
                     </>
                 }

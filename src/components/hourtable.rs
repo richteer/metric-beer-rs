@@ -1,3 +1,4 @@
+use std::sync::Arc;
 use yew::prelude::*;
 
 use crate::data::*;
@@ -5,7 +6,7 @@ use crate::common::*;
 
 #[derive(Properties, PartialEq)]
 pub struct HourTableProps {
-    pub data: BreweryData,
+    pub data: Arc<Box<BreweryData>>,
     pub ampm: bool,
     pub date: chrono::DateTime<chrono::Local>,
     pub dayorder: Vec<String>,
