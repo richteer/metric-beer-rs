@@ -9,7 +9,7 @@ pub struct HourTableProps {
     pub data: Arc<Box<BreweryData>>,
     pub ampm: bool,
     pub date: chrono::DateTime<chrono::Local>,
-    pub dayorder: Vec<String>,
+    pub dayorder: Arc<Vec<String>>,
 }
 
 #[function_component(HourTable)]

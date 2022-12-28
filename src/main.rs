@@ -27,9 +27,13 @@ fn App() -> Html {
     let date = use_state(|| chrono::Local::now());
     let ampm = use_bool_toggle(false);
 
-    // TODO: State this, let the user set weekend type
-    let dayorder: Vec<String> = vec!["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].iter()
-        .map(|e| e.to_string()).collect();
+    // Yes, this is probably unnecessary.
+    let dayorder = use_toggle(
+        Arc::new(vec!["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].iter()
+            .map(|e| e.to_string()).collect::<Vec<String>>()),
+        Arc::new(vec!["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].iter()
+            .map(|e| e.to_string()).collect())
+    );
 
     {
         let data = data.clone();
@@ -46,6 +50,10 @@ fn App() -> Html {
         let ampm = ampm.clone();
         Callback::from(move |_| ampm.toggle())
     };
+    let onweekendclick = {
+        let dayorder = dayorder.clone();
+        Callback::from(move |_| dayorder.toggle())
+    };
 
     html! {
         <body class="container">
@@ -58,7 +66,7 @@ fn App() -> Html {
                         <OpenToday data={data} ampm={*ampm} date={*date}/>
                     </div>
                     <div>
-                        <HourTable data={data} ampm={*ampm} date={*date} dayorder={dayorder.clone()}/>
+                        <HourTable data={data} ampm={*ampm} date={*date} dayorder={(*dayorder).clone()}/>
                     </div>
                     </>
                 }
@@ -73,6 +81,10 @@ fn App() -> Html {
             <label for="ampm">
                 <input type="checkbox" name="ampm" onclick={onampmclick}/>
                 {"Use AM/PM"}
+            </label>
+            <label for="weekend">
+                <input type="checkbox" name="weekend" onclick={onweekendclick}/>
+                {"Weekend at End"}
             </label>
         </div>
         </body>
