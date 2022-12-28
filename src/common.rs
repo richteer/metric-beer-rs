@@ -8,6 +8,24 @@ pub enum OpenStatus {
     Error,
 }
 
+pub trait ToTodayHour {
+    fn to_today(&self, now: &DateTime<Local>) -> Option<DateTime<Local>>;
+}
+
+impl ToTodayHour for i32 {
+    fn to_today(&self, now: &DateTime<Local>) -> Option<DateTime<Local>> {
+        now.timezone().with_ymd_and_hms(
+            now.year(),
+            now.month(),
+            now.day(),
+            *self as u32,
+            0, // Data format currently assumes opening times on the hour, this should probably be adjusted
+            0,
+        ).single()
+    }
+}
+
+
 impl Display for OpenStatus {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let data = match self {
