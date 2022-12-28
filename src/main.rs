@@ -25,7 +25,6 @@ async fn get_data() -> Result<Arc<Box<BreweryData>>, ()> {
 fn App() -> Html {
     let data = use_async(async move { get_data().await });
     let date = use_state(|| chrono::Local::now());
-    let ampm = use_bool_toggle(false);
 
     // Yes, this is probably unnecessary.
     let dayorder = use_toggle(
@@ -35,9 +34,23 @@ fn App() -> Html {
             .map(|e| e.to_string()).collect())
     );
 
+    let ampm_storage = use_local_storage::<bool>("ampm".to_string());
+    let monfirst_storage = use_local_storage::<bool>("monfirst".to_string());
+
+    let ampm = use_bool_toggle(ampm_storage.unwrap_or_else(|| false));
+
     {
         let data = data.clone();
-        use_mount(move || { data.run() });
+        let dayorder = dayorder.clone();
+        let monfirst_storage = monfirst_storage.clone();
+        use_mount(move || {
+            match *monfirst_storage {
+                Some(true) => dayorder.set_right(),
+                Some(false) => dayorder.set_left(),
+                None => dayorder.set_left(),
+            };
+            data.run()
+        });
     }
     {
         let date = date.clone();
@@ -48,11 +61,19 @@ fn App() -> Html {
 
     let onampmclick = {
         let ampm = ampm.clone();
-        Callback::from(move |_| ampm.toggle())
+        let ampm_storage = ampm_storage.clone();
+        Callback::from(move |_| {
+            ampm_storage.set(!*ampm);
+            ampm.toggle();
+        })
     };
-    let onweekendclick = {
+    let onmonfirstclick = {
         let dayorder = dayorder.clone();
-        Callback::from(move |_| dayorder.toggle())
+        let monfirst_storage = monfirst_storage.clone();
+        Callback::from(move |_| {
+            monfirst_storage.set(!monfirst_storage.unwrap_or_default());
+            dayorder.toggle()
+        })
     };
 
     html! {
@@ -83,12 +104,12 @@ fn App() -> Html {
         </div>
         <div>
             <label for="ampm">
-                <input type="checkbox" name="ampm" onclick={onampmclick}/>
+                <input type="checkbox" name="ampm" onclick={onampmclick} checked={*ampm}/>
                 {"Use AM/PM"}
             </label>
             <label for="weekend">
-                <input type="checkbox" name="weekend" onclick={onweekendclick}/>
-                {"Weekend at End"}
+                <input type="checkbox" name="weekend" onclick={onmonfirstclick} checked={monfirst_storage.unwrap_or_default()}/>
+                {"Monday First"}
             </label>
         </div>
         </body>
