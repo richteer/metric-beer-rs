@@ -1,0 +1,101 @@
+{
+	"Breweries": [
+		{
+			"name": "Celis",
+			"hours": {
+				"Monday": {"open": 15, "close": 22},
+				"Tuesday": {"open": 15, "close": 22},
+				"Wednesday": {"open": 15, "close": 22},
+				"Thursday": {"open": 15, "close": 22},
+				"Friday": {"open": 12, "close": 22},
+				"Saturday": {"open": 12, "close": 22},
+				"Sunday": {"open": 12, "close": 22}
+			}
+		},
+		{
+			"name": "Circle",
+			"hours": {
+				"Monday": {"open": -1, "close": -1},
+				"Tuesday": {"open": 16, "close": 21},
+				"Wednesday": {"open": 16, "close": 21},
+				"Thursday": {"open": 16, "close": 21},
+				"Friday": {"open": 15, "close": 22},
+				"Saturday": {"open": 11, "close": 22},
+				"Sunday": {"open": 12, "close": 19}
+			}
+		},
+		{
+			"name": "4th Tap",
+			"hours": {
+				"Monday": {"open": -1, "close": -1},
+				"Tuesday": {"open": -1, "close": -1},
+				"Wednesday": {"open": -1, "close": -1},
+				"Thursday": {"open": -1, "close": -1},
+				"Friday": {"open": -1, "close": -1},
+				"Saturday": {"open": -1, "close": -1},
+				"Sunday": {"open": -1, "close": -1}
+			}
+		},
+		{
+			"name": "Beerworks",
+			"hours": {
+				"Monday": {"open": 11, "close": 22},
+				"Tuesday": {"open": 11, "close": 22},
+				"Wednesday": {"open": 11, "close": 22},
+				"Thursday": {"open": 11, "close": 22},
+				"Friday": {"open": 11, "close": 22},
+				"Saturday": {"open": 11, "close": 22},
+				"Sunday": {"open": 11, "close": 20}
+			}
+		},
+		{
+			"name": "Adelbert's",
+			"hours": {
+				"Monday": {"open": -1, "close": -1},
+				"Tuesday": {"open": -1, "close": -1},
+				"Wednesday": {"open": -1, "close": -1},
+				"Thursday": {"open": -1, "close": -1},
+				"Friday": {"open": -1, "close": -1},
+				"Saturday": {"open": -1, "close": -1},
+				"Sunday": {"open": -1, "close": -1}
+			}
+		},
+		{
+			"name": "Oskar Blues",
+			"hours": {
+				"Monday": {"open": 15, "close": 21},
+				"Tuesday": {"open": 15, "close": 21},
+				"Wednesday": {"open": 15, "close": 21},
+				"Thursday": {"open": 15, "close": 21},
+				"Friday": {"open": 12, "close": 21},
+				"Saturday": {"open": 12, "close": 21},
+				"Sunday": {"open": 12, "close": 19}
+			}
+		},
+		{
+			"name": "Fairweather Cider 🍎",
+			"hours": {
+				"Monday": {"open": -1, "close": -1},
+				"Tuesday": {"open": -1, "close": -1},
+				"Wednesday": {"open": 17, "close": 22},
+				"Thursday": {"open": 12, "close": 22},
+				"Friday": {"open": 12, "close": 0},
+				"Saturday": {"open": 12, "close": 23},
+				"Sunday": {"open": 12, "close": 19}
+			}
+		},
+		{
+			"name": "Hopsquad",
+			"hours": {
+				"Monday": {"open": 12, "close": 22},
+				"Tuesday": {"open": 12, "close": 22},
+				"Wednesday": {"open": 12, "close": 23},
+				"Thursday": {"open": 12, "close": 23},
+				"Friday": {"open": 12, "close": 23},
+				"Saturday": {"open": 12, "close": 23},
+				"Sunday": {"open": 12, "close": 22}
+			}
+		}
+	],
+	"Crawl": ["Beerworks", "Adelbert's", "Celis", "Oskar Blues", "Fairweather Cider 🍎", "4th Tap", "Circle", "Hopsquad"]
+}
