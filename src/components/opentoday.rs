@@ -1,4 +1,5 @@
 use std::sync::Arc;
+use std::cmp::Ordering;
 use yew::prelude::*;
 use chrono::prelude::*;
 
@@ -9,9 +10,9 @@ fn format_upcoming(now: &DateTime<Local>, open: Option<&DateTime<Local>>, close:
     match (open, close) {
         (Some(o), Some(c)) => {
             match (now.cmp(o), now.cmp(c)) {
-                (std::cmp::Ordering::Less, _) => OpenStatus::OpenLater(format!("{} min", (*o - *now).num_minutes())), // TODO: consider an display option for hours/mins?
-                (_, std::cmp::Ordering::Less) | (_, std::cmp::Ordering::Equal)  => OpenStatus::Open,
-                (_, std::cmp::Ordering::Greater) => OpenStatus::Closed,
+                (Ordering::Less, _) => OpenStatus::OpenLater(format!("{} min", (*o - *now).num_minutes())), // TODO: consider an display option for hours/mins?
+                (_, Ordering::Less) | (_, Ordering::Equal)  => OpenStatus::Open,
+                (_, Ordering::Greater) => OpenStatus::Closed,
             }
         }
         (None, None) => OpenStatus::Closed,
