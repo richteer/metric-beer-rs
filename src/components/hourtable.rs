@@ -15,7 +15,7 @@ pub struct HourTableProps {
 #[function_component(HourTable)]
 pub fn hour_table(props: &HourTableProps) -> Html {
     html! {
-        <table>
+        <table role="grid">
             <thead>
             <tr>
                 <td>{"Brewery"}</td>
