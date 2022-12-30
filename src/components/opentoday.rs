@@ -4,7 +4,7 @@ use yew::prelude::*;
 use chrono::prelude::*;
 
 use crate::common::*;
-use crate::data::*;
+use metric_beer_data::*;
 
 fn format_upcoming(now: &DateTime<Local>, open: Option<&DateTime<Local>>, close: Option<&DateTime<Local>>) -> OpenStatus {
     match (open, close) {

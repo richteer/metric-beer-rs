@@ -502,12 +502,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
+name = "metric-beer-data"
+version = "0.1.0"
+source = "git+https://github.com/richteer/metric-beer-data#f6a9294411bf0f64f50b10197b38cb1f9e9c0dcc"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "metric-beer-rs"
 version = "0.1.0"
 dependencies = [
  "chrono",
  "gloo-net",
  "log",
+ "metric-beer-data",
  "serde",
  "serde_json",
  "wasm-logger",

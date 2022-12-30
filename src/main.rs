@@ -8,8 +8,9 @@ use components::*;
 
 mod common;
 
-mod data;
-use data::*;
+//mod data;
+//use data::*;
+use metric_beer_data::*;
 
 
 // TODO: Actually error handle, don't rely on unwraps

@@ -15,6 +15,9 @@ log = "0.4.17"
 wasm-logger = "0.2.0"
 chrono = "0.4.23"
 
+# TODO: Figure out ssh clones here, the regular url format likes to complain
+metric-beer-data = { git = "https://github.com/richteer/metric-beer-data" }
+
 [profile.release]
 lto = true
 opt-level = 'z'

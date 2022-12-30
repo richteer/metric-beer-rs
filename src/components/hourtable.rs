@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use yew::prelude::*;
 
-use crate::data::*;
+use metric_beer_data::*;
 use crate::common::*;
 
 #[derive(Properties, PartialEq)]
